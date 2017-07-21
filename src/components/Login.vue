@@ -16,7 +16,7 @@
     <div class="container">
       <transition name="fade" mode="out-in">
         <div v-if="show" class="inner">
-          <h1 @click="wifi=!wifi">WMS 4.0</h1>
+          <h1 @click="wifi=!wifi">尚赫装箱明细表</h1>
           <p class="version"><span>--</span>乐速科技<span>--</span></p>
           <div class="form">
             <transition name="wifi">
@@ -27,16 +27,27 @@
                 ref="ref_form"
                 :rules="rule.form">
                 <el-form-item prop="username">
-                  <input type="text" v-model="form.username" placeholder="用户名" tabindex="1">
+                  <input type="text" v-model="form.id" disabled tabindex="1">
                 </el-form-item>
                 <el-form-item prop="password">
-                  <input type="password" v-model="form.password" placeholder="密码" tabindex="2" autocomplete="off">
+                  <input type="password" v-model="form.Code" placeholder="CODE" tabindex="2" autocomplete="off">
                 </el-form-item>
                 <button id="login-button" @click.prevent="login" :disabled="!show" tabindex="3">登陆</button>
               </el-form>
               <el-form
                 key="wifi"
-                v-if="wifi">
+                v-if="wifi"
+                :model="form"
+                :rules="rule.form">
+                <el-form-item prop="username">
+                  <input type="text" v-model="form.id" disabled tabindex="1">
+                </el-form-item>
+                <el-form-item prop="password">
+                  <input type="password" v-model="form.Code" placeholder="CODE" tabindex="2" autocomplete="off">
+                </el-form-item>
+                <button id="login-button" @click.prevent="login" :disabled="!show" tabindex="3">登陆</button>
+              </el-form>
+              <el-form>
                 <qrcode :value="`http://${http.ip}:${http.port}/`"
                         :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
               </el-form>
@@ -70,8 +81,8 @@
         loading: false,
         show: false,
         form: {
-          username: '',
-          password: '',
+          id: '',
+          Code: '',
         },
       };
     },
@@ -94,32 +105,33 @@
               customClass: 'loginLoading',
               fullscreen: true,
             });
-            this.p('/wms4/users/Login', {
+            this.p('/GetCkLst', {
               ...this.form,
-              ...this.$route.params}, {
-                s: response => {
-                  this.f(1, response.body.data);
-                  this.$router.push({path: '/wms/home'});
-                  this.loading = true;
-                  this.show = false;
-                },
-                show: true,
-                loading,
-              });
+              ...this.$route.params,
+            }, {
+              s: response => {
+                this.f(1, response.body.data);
+                this.$router.push({path: '/wms'});
+                this.loading = true;
+                this.show = false;
+              },
+              show: true,
+              loading,
+            });
           } else {
             return false;
           }
         });
       },
       checkUser () {
-        if (this.$route.params.code === 1 || this.$route.params.code === '1') {
+        if (this.$route.params.code !== 0) {
           this.init();
         } else {
           this.$message('正在尝试自动登录...');
-          this.p('/wms4/users/Login', this.$route.params, {
+          this.p('/users/Login', this.$route.params, {
             s: response => {
               this.f(1, response.body.data);
-              this.$router.replace({path: '/wms/home'});
+              this.$router.replace({path: '/wms'});
             },
             e: () => {
               this.init();
@@ -131,10 +143,7 @@
       },
       init () {
         this.show = true;
-        this.form = {
-          ...this.form,
-          ...this.user,
-        };
+        this.form.id = this.$route.params.code;
         speckText('欢迎使用乐速科技WMS 4.0');
         this.f(1, {});
       },
@@ -561,9 +570,9 @@
     text-align: center;
     margin-bottom: -15px;
     margin-top: -6px;
-    span{
+    span {
       margin: 0 5px;
     }
   }
-  
+
 </style>

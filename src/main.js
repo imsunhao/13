@@ -26,15 +26,6 @@ Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
-import 'element-ui/lib/theme-default/index.css';
-
-// import LoadingComp from '@/components/0_static/LoadingComp.vue';
-// import ErrorComp from '@/components/0_static/ErrorComp.vue';
-import VueQrcode from 'vue-qrcode';
-// Vue.component('loading-comp', LoadingComp);
-// Vue.component('error-comp', ErrorComp);
-Vue.component('qrcode', VueQrcode);
-
 import { sync } from 'vuex-router-sync';
 import App from './App.vue';
 import router from './router';

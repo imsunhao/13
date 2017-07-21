@@ -1,9 +1,7 @@
 const state = {
   user: {
-    username: '',
-    nickname: '',
-    role: '',
-    password: '',
+    id: '',
+    Code: '',
   },
 };
 

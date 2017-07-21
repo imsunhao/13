@@ -57,7 +57,7 @@ module.exports = function (router) {
     req.session.save();
   }
 
-  router.post('/users/Login', function (req, res, next) {
+  router.post('GetCkLst', function (req, res, next) {
     let data = req.body
     if (typeof req.session.user !== 'undefined') {
       req.conso += consoleOutPut + '用户身份验证\n'
@@ -114,10 +114,4 @@ module.exports = function (router) {
     }
   })
 
-  router.post('/users/logout', function (req, res, next) {
-    req.conso += consoleOutPut + req.session.user.nickname + '\t用户退出\n'
-    req.session.destroy()
-    res.send({status: 2})
-    return next()
-  })
 }

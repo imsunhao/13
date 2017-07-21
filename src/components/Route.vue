@@ -7,11 +7,7 @@
   export default {
     name: 'route',
     beforeRouteEnter (to, from, next) {
-      if (to.params.code) {
-        next();
-      } else {
-        next('/login/0');
-      }
+      next({ path: '/login/1' });
     },
   };
 </script>

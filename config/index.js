@@ -27,11 +27,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/WebServices/wbs': {
-        target: 'http://127.0.0.1:5306/',
+      '/WebServices/Wbs.asmx': {
+        target: 'http://221.214.90.154:5306/',
         // pathRewrite: {'^/api' : '/wms4'},
         secure: false,
-        changeOrigin: false
+        changeOrigin: true
       },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

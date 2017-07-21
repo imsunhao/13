@@ -240,7 +240,7 @@ const devConfig = require('./config/dev')
 app.use('/', index)
 
 // TODO wms 4.0 虚拟接口
-const wms4 = require('./routes/wms4Mock')
+const wbs = require('./routes/wbsMock')
 
 // 标色
 const {
@@ -251,6 +251,7 @@ const {
 } = require('./config/dev')
 
 // 登录验证
+/*
 app.use(function (req, res, next) {
   if (!req.session.user) {
     if (req.session.fail && typeof req.session.firstTime !== 'undefined') {
@@ -275,7 +276,7 @@ app.use(function (req, res, next) {
 
 // 通知层-开始
 
-app.use('/wms4', function (req, res, next) {
+app.use('/WebServices/wbs', function (req, res, next) {
   req.timeStart = new Date()
   let user = usernameLog('有新的客户')
   if (req.session.user) {
@@ -295,18 +296,18 @@ ${user}\t发起请求:
 })
 
 // 模拟网络延迟
-app.use('/wms4', function (req, res, next) {
+app.use('/WebServices/wbs', function (req, res, next) {
   setTimeout(function () {
     return next()
   }, devConfig.setTimeout)
 })
 
 // wms Mock
-app.use('/wms4', wms4)
+app.use('/WebServices/wbs', wbs)
 
 // 通知层-输出
 
-app.use('/wms4', function (req, res, next) {
+app.use('/WebServices/wbs', function (req, res, next) {
   let stringTime = StringTime(new Date().getTime() - req.timeStart.getTime()) // 时间差的毫秒数
 
   req.conso +=
@@ -352,13 +353,14 @@ function StringTime (date3) {
 
   return string
 }
+*/
 
 // TODO wms 4.0 端口转发
 // 一旦切换为 真实端口 便没有通知层
 
 const proxyMiddleware = require('http-proxy-middleware')
-app.use(proxyMiddleware('/WebServices/wbs', {
-  target: 'http://127.0.0.1:5306/',
+app.use(proxyMiddleware('/WebServices/Wbs.asmx', {
+  target: 'http://221.214.90.154:5306/',
   // pathRewrite: {'^/api' : '/wms4'},
   secure: false,
   changeOrigin: false

@@ -37,38 +37,6 @@ const Main = () => ({
   timeout: time.timeout,
 });
 
-const Pane = () => ({
-  component: import('@/components/2_navigation/Pane.vue'),
-  loading: LoadingComp,
-  error: ErrorComp,
-  delay: time.delay,
-  timeout: time.timeout,
-});
-
-const Home = () => ({
-  component: import('@/components/1_about/Home.vue'),
-  loading: LoadingComp,
-  error: ErrorComp,
-  delay: time.delay,
-  timeout: time.timeout,
-});
-
-const QRCode = () => ({
-  component: import('@/components/3/QRCode.vue'),
-  loading: LoadingComp,
-  error: ErrorComp,
-  delay: time.delay,
-  timeout: time.timeout,
-});
-
-const Transfer = () => ({
-  component: import('@/components/0_static/Transfer.vue'),
-  loading: LoadingComp,
-  error: ErrorComp,
-  delay: time.delay,
-  timeout: time.timeout,
-});
-
 export default new Router({
   routes: [
     {
@@ -83,28 +51,6 @@ export default new Router({
       path: '/wms',
       component: Main,
       meta: { requiresAuth: true },
-      children: [
-        {
-          path: 'home',
-          component: Home,
-        },
-        {
-          path: 'pane',
-          component: Pane,
-        },
-        {
-          path: 'qrcode',
-          component: QRCode,
-        },
-        {
-          path: 'user/:id',
-          component: User,
-        },
-        {
-          path: 'transfer',
-          component: Transfer,
-        },
-      ],
     },
   ],
 });

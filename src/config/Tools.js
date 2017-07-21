@@ -1,4 +1,5 @@
 import { statusConfig, validateRule } from './PublicMethods';
+import { state } from './VueX/public/http';
 
 const SPECK = false;
 
@@ -85,6 +86,7 @@ function p (url, body, option) {
   // 最后一个 option 也可以 是 function 代表 与后台 通讯成功后 执行function
   option.constructor === Function ? call = option : call = juge;
 
+  url = state.http.projectName + url;
   this.$http.post(url, body)
   .then(call)
   .catch(response => {
