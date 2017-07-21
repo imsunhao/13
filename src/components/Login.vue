@@ -1,6 +1,5 @@
 <template>
   <el-row class="login">
-    <!--<router-link to="wms/home">wms</router-link>-->
     <ul :class="[{ loading: loading }, 'bg-bubbles']">
       <li></li>
       <li></li>
@@ -16,40 +15,20 @@
     <div class="container">
       <transition name="fade" mode="out-in">
         <div v-if="show" class="inner">
-          <h1 @click="wifi=!wifi">尚赫装箱明细表</h1>
+          <h1>尚赫装箱明细表</h1>
           <p class="version"><span>--</span>乐速科技<span>--</span></p>
           <div class="form">
             <transition name="wifi">
               <el-form
-                v-if="!wifi"
+                v-if="wifi"
                 key="main"
                 :model="form"
                 ref="ref_form"
                 :rules="rule.form">
-                <el-form-item prop="username">
-                  <input type="text" v-model="form.id" disabled tabindex="1">
-                </el-form-item>
-                <el-form-item prop="password">
-                  <input type="password" v-model="form.Code" placeholder="CODE" tabindex="2" autocomplete="off">
+                <el-form-item prop="Code">
+                  <input v-model="form.Code" placeholder="CODE" tabindex="2" autocomplete="off">
                 </el-form-item>
                 <button id="login-button" @click.prevent="login" :disabled="!show" tabindex="3">登陆</button>
-              </el-form>
-              <el-form
-                key="wifi"
-                v-if="wifi"
-                :model="form"
-                :rules="rule.form">
-                <el-form-item prop="username">
-                  <input type="text" v-model="form.id" disabled tabindex="1">
-                </el-form-item>
-                <el-form-item prop="password">
-                  <input type="password" v-model="form.Code" placeholder="CODE" tabindex="2" autocomplete="off">
-                </el-form-item>
-                <button id="login-button" @click.prevent="login" :disabled="!show" tabindex="3">登陆</button>
-              </el-form>
-              <el-form>
-                <qrcode :value="`http://${http.ip}:${http.port}/`"
-                        :options="{ foreground: '#50a3a2',size:150 }"></qrcode>
               </el-form>
             </transition>
           </div>
@@ -87,6 +66,7 @@
       };
     },
     mounted () {
+      console.log(this);
       this.checkUser();
     },
     watch: {
@@ -107,13 +87,15 @@
             });
             this.p('/GetCkLst', {
               ...this.form,
-              ...this.$route.params,
             }, {
               s: response => {
                 this.f(1, response.body.data);
                 this.$router.push({path: '/wms'});
                 this.loading = true;
                 this.show = false;
+                setTimeout(() => {
+                  this.wifi = false;
+                }, 500);
               },
               show: true,
               loading,
@@ -143,6 +125,9 @@
       },
       init () {
         this.show = true;
+        setTimeout(() => {
+          this.wifi = true;
+        }, 500);
         this.form.id = this.$route.params.code;
         speckText('欢迎使用乐速科技WMS 4.0');
         this.f(1, {});
@@ -568,8 +553,7 @@
     color: #e4e4e4;
     font-size: 1em;
     text-align: center;
-    margin-bottom: -15px;
-    margin-top: -6px;
+    margin-top: 15px;
     span {
       margin: 0 5px;
     }

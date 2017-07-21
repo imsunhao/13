@@ -1,8 +1,8 @@
 
 let step = {
   form: {
-    'username': ['vNull', 'vNTS', 'vWS16'],
-    'password': ['vNull', 'vWS16'],
+    'id': ['vNull'],
+    'Code': ['vNull'],
   },
 };
 

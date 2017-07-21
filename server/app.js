@@ -363,7 +363,7 @@ app.use(proxyMiddleware('/WebServices/Wbs.asmx', {
   target: 'http://221.214.90.154:5306/',
   // pathRewrite: {'^/api' : '/wms4'},
   secure: false,
-  changeOrigin: false
+  changeOrigin: true
 }))
 
 // error handler analysis

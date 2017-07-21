@@ -90,7 +90,7 @@ function p (url, body, option) {
   this.$http.post(url, body)
   .then(call)
   .catch(response => {
-    if (loading)loading.close();
+    if (loading) loading.close();
     let {status, bodyText} = response;
     console.log(status, bodyText);
     this.$alert('服务器未响应！', '提示', {
@@ -102,8 +102,9 @@ function p (url, body, option) {
   });
 
   function juge (response) {
-    if (loading)loading.close();
-    let status = response.body.status;
+    if (loading) loading.close();
+    response = JSON.parse(response.body.d);
+    let status = response.state;
     let {
       s,         // 判断为 成功之后的 函数回调
       e,         // 判断为 失败之后的 函数回调
