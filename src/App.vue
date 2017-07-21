@@ -42,7 +42,9 @@
   
   html {
     overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: auto;
   }
   
   body {
@@ -51,11 +53,6 @@
   }
   
   @media screen and (max-width: 800px) {
-    html {
-      overflow-x: hidden;
-      overflow-y: scroll;
-      height: auto;
-    }
     
     .box-card {
       .el-card__body {
@@ -169,13 +166,20 @@
     }
   }
   
-  .loginLoading{
-    background: rgba(255,255,255,.5);
-    .el-loading-spinner .path{
-      stroke:#13ce66
+  .loginLoading {
+    background: rgba(255, 255, 255, .5);
+    .el-loading-spinner .path {
+      stroke: #13ce66
     }
-    .el-loading-text{
+    .el-loading-text {
       color: #13ce66;
+    }
+  }
+  
+  .table_form {
+    .el-form-item__content {
+      width: 100%;
+      margin-left: 0 !important;
     }
   }
 

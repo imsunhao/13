@@ -1,20 +1,111 @@
 <template>
-  <el-row
-    v-else
-    v-loading="loading"
-    element-loading-text="拼命加载中">
-    <error-comp v-if="error" :title="'asdgsd'"></error-comp>
-    <h1>Hello App!
-      <button @click="signOut">退出系统</button>
-    </h1>
-  </el-row>
+  <div class="data">
+    <h2>天津尚赫保健品有限公司</h2>
+    <el-form labelWidth="70px"
+             ref="form"
+             label-position="right"
+             class="demo-table-expand">
+      <el-form-item label="订单号">
+        <span>{{ data.bh }}</span>
+      </el-form-item>
+      <el-form-item label="发货方式">
+        <span> 佳怡尚赫沈阳仓 </span>
+      </el-form-item>
+      <el-form-item label="收货地址">
+        <span>{{ data.dz }}</span>
+      </el-form-item>
+      <el-form-item label="收货人">
+        <span>{{ data.lxr }}</span>
+      </el-form-item>
+      <el-form-item label="联系电话">
+        <span>{{ data.tel == null ? '暂无' : data.tel }}</span>
+      </el-form-item>
+      <el-form-item label="整箱">
+        <el-table
+          :data="table1"
+          row-key="hpbh"
+          border>
+          <el-table-column
+            label="商品编号"
+            min-width="100px"
+            align="center"
+            prop="hpbh">
+          </el-table-column>
+          <el-table-column
+            label="商品名称"
+            min-width="200px"
+            align="center"
+            prop="mc">
+          </el-table-column>
+          <el-table-column
+            label="箱数"
+            min-width="80px"
+            align="center"
+            prop="sl">
+          </el-table-column>
+          <el-table-column
+            label="范围"
+            min-width="80px"
+            align="center">
+            <template scope="s">
+              {{s.row.fw1}}-{{s.row.fw2}}
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-form-item>
+      <el-form-item label="散箱">
+        <el-table
+          :data="table2"
+          row-key="hpbh"
+          border>
+          <el-table-column
+            label="商品编号"
+            min-width="100px"
+            align="center"
+            prop="hpbh">
+          </el-table-column>
+          <el-table-column
+            label="商品名称"
+            min-width="200px"
+            align="center"
+            prop="mc">
+          </el-table-column>
+          <el-table-column
+            label="装箱量"
+            min-width="80px"
+            align="center"
+            prop="sl">
+          </el-table-column>
+          <el-table-column
+            label="箱号"
+            min-width="80px"
+            align="center">
+            <template scope="s">
+              {{s.row.fw1}}
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-form-item>
+      <el-form-item label="合计">
+        <span>共{{ data.sxs + data.zxs }}箱，其中整箱（共{{data.zxs}}箱）散箱（共{{data.sxs}}箱）</span>
+      </el-form-item>
+      <el-form-item label="评价我们">
+        <el-rate
+          v-model="pj"
+          show-text>
+        </el-rate>
+      </el-form-item>
+      <el-form-item label="联系我们">
+      
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-  import { speckText } from '../config/Tools';
   import Vue from 'vue';
-  import App from '../main';
-
+  import { mapState } from 'vuex';
+  
   import {
     Input,
     InputNumber,
@@ -33,7 +124,7 @@
     Col,
     Rate,
   } from 'element-ui';
-
+  
   Vue.use(Input);
   Vue.use(InputNumber);
   Vue.use(Radio);
@@ -46,55 +137,72 @@
   Vue.use(TableColumn);
   Vue.use(Popover);
   Vue.use(Tooltip);
+  Vue.use(Tag);
   Vue.use(Icon);
   Vue.use(Col);
   Vue.use(Rate);
-
+  
+  function check (step, item) {
+    for (let i of step) {
+      if (i.hpbh === item.hpbh) {
+        return i;
+      }
+    }
+    return false;
+  }
+  
   export default {
     name: 'wms',
-    beforeRouteEnter (to, from, next) {
-      if (to.matched.some(record => record.meta.requiresAuth)) {
-        let nickname = App.user.nickname;
-        if (typeof nickname === 'undefined' || nickname === '') {
-          App.p('/users/Login', {}, {
-            s: response => {
-              App.f(0, response.body.data);
-              speckText(`欢迎回来! ${App.user.role}-${App.user.nickname}!`);
-              next();
-            },
-            e: () => {
-              next({path: '/login/1'});
-            },
-            show: true,
-            type: 'warning',
-          });
-        } else {
-          speckText(`欢迎 ${App.user.role}-${App.user.nickname}!`);
-          setTimeout(() => {
-            console.log('页面加载完成!\n等待上一个页面动画完成中...');
-            next();
-          }, 1500);
-        }
-      } else {
-        next();
-      }
-    },
     data () {
       return {
-        loading: false,
-        error: false,
-        ws: '',
+        'id': 1231,
+        'pj': 3,
+        'tqm': 3321,
       };
     },
-    methods: {
-      signOut () {
-        this.$http.post('/users/logout')
-        .then(response => {
-          if (response.body.status < 10000) {
-            this.$router.push({path: '/login/1'});
-            console.log('用户退出！');
+    computed: {
+      ...mapState(['data', 'user']),
+      table1 () {
+        let step = [];
+        for (let item of this.data.zxData) {
+          let i = check(step, item);
+          if (i) {
+            i.sl++;
+            i.fw2++;
+          } else {
+            let json = JSON.stringify(item);
+            json = JSON.parse(json);
+            json.fw1 = item.xh;
+            json.fw2 = item.xh;
+            json.sl = 1;
+            step.push(json);
           }
+        }
+        return step;
+      },
+      table2 () {
+        let step = [];
+        for (let item of this.data.sxData) {
+          let json = JSON.stringify(item);
+          json = JSON.parse(json);
+          json.fw1 = item.xh;
+          step.push(json);
+        }
+        return step;
+      },
+    },
+    mounted () {
+      console.log(this.$refs.form.$el.querySelectorAll('.el-table'));
+      this.clickFun();
+    },
+    methods: {
+      clickFun () {
+        this.getDom().forEach(div => {
+          div.parentElement.parentElement.classList['add']('table_form');
         });
+      },
+      getDom () {
+        return Array.from(this.$refs.form.$el.querySelectorAll('.el-table'));
       },
     },
   };
@@ -102,24 +210,24 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  
-  /* 设置 router-view 动画特效*/
-  .slide-fade-enter-active {
-    transition: all .3s ease;
+  .data {
+    background-color: #fbfdff;
+    h2 {
+      text-align: center;
+    }
+    
+    .demo-table-expand {
+      width: 90%;
+      margin: 0 auto;
+      .el-form-item {
+        margin-bottom: 5px;
+      }
+    }
+    
+    .el-rate {
+      margin-top: 8px;
+    }
+    
   }
-  
-  .slide-fade-leave-active {
-    transition: all .2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-  
-  .slide-fade-enter {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  
-  .slide-fade-leave-to {
-    transform: translateX(-10px);
-    opacity: 0;
-  }
-  
+
 </style>

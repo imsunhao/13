@@ -9,10 +9,6 @@ import {time} from '../config/Loading';
 Vue.use(Router);
 Vue.use(Resource);
 
-const User = {
-  template: '<h2>User {{ $route.params.id }}</h2>',
-};
-
 const Route = () => ({
   component: import('@/components/Route.vue'),
   loading: LoadingComp,

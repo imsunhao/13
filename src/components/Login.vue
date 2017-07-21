@@ -65,16 +65,15 @@
         },
       };
     },
+    computed: {
+      ...mapState(['http', 'user']),
+    },
     mounted () {
-      console.log(this);
       this.checkUser();
     },
     watch: {
       // 如果路由有变化，会再次执行该方法
       '$route': 'checkUser()',
-    },
-    computed: {
-      ...mapState(['http', 'user']),
     },
     methods: {
       login () {
