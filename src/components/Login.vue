@@ -89,7 +89,7 @@
               ...this.form,
             }, {
               s: response => {
-                this.f(1, response.body.data);
+                this.f(1, response.data);
                 this.$router.push({path: '/wms'});
                 this.loading = true;
                 this.show = false;

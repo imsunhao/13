@@ -1,6 +1,7 @@
 import LoadingConf from '../../config/Loading/title';
 import * as user from './public/user';
 import * as http from './public/http';
+import * as Home from './Home';
 
 let vueX = {
   state: {
@@ -29,6 +30,7 @@ let vueX = {
 };
 
 [
+  Home,
   user,
   http,
 ].forEach(item => {

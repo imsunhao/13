@@ -9,7 +9,7 @@ export default [
     },
   },
   {
-    commit: 'updateUser_1',
+    commit: 'updateData_1',
     payload: (obj, data) => {
       return {
         event: '更新 data',
