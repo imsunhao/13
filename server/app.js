@@ -172,10 +172,10 @@ app.use(express.static(path.join(__dirname, 'public')))           //加载public
  */
 app.use(session({
   key: 'session',
-  secret: 's8^%4$V4KH5fd2dd0g',
+  secret: 'KH5fd2dd0gs8^%4$V4',
   cookie: {maxAge: 1000 * 60 * 60 * 24},//1小时 //1k (s) * 60(min) *60 (hover) *24(day)
   store: new MongoStore({
-    db: 'wms4',
+    db: 'shanghe1',
     mongooseConnection: mongoose.connection
   }),
   resave: true,
@@ -357,8 +357,8 @@ function StringTime (date3) {
 // 一旦切换为 真实端口 便没有通知层
 
 const proxyMiddleware = require('http-proxy-middleware')
-app.use(proxyMiddleware('/wms_cg_web', {
-  target: 'http://127.0.0.1:8080/',
+app.use(proxyMiddleware('/WebServices/wbs', {
+  target: 'http://127.0.0.1:5306/',
   // pathRewrite: {'^/api' : '/wms4'},
   secure: false,
   changeOrigin: false

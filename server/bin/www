@@ -12,7 +12,7 @@ const http = require('http');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '13000');
+const port = normalizePort(process.env.PORT || '10000');
 app.set('port', port);
 
 /**
@@ -29,8 +29,8 @@ const server = http.createServer(app);
  /*     功能            长连接-通讯   核心
  /*     网址：  https://github.com/sitegui/nodejs-websocket
  */
-const socketIO = require('socket.io')(server);
-require('../routes/socket')(socketIO);
+// const socketIO = require('socket.io')(server);
+// require('../routes/socket')(socketIO);
 
 /*
  /*****************************************************************************/

@@ -22,19 +22,13 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 18080,
+    port: 10001,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/wms4': {
-        target: 'http://127.0.0.1:13000/',
-        // pathRewrite: {'^/api' : '/wms4'},
-        secure: false,
-        changeOrigin: false
-      },
-      '/wms_cg_web': {
-        target: 'http://127.0.0.1:8080/',
+      '/WebServices/wbs': {
+        target: 'http://127.0.0.1:5306/',
         // pathRewrite: {'^/api' : '/wms4'},
         secure: false,
         changeOrigin: false
