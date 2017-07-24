@@ -21,7 +21,6 @@ Vue.use(FormItem);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;
-Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;

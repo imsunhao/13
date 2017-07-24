@@ -7,7 +7,7 @@
   export default {
     name: 'route',
     beforeRouteEnter (to, from, next) {
-      next({ path: '/login/1' });
+      next({ path: '/login/102431' });
     },
   };
 </script>
