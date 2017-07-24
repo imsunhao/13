@@ -19,6 +19,16 @@
           <p class="version"><span>--</span>乐速科技<span>--</span></p>
           <div class="form">
             <transition name="wifi">
+              <div class="warning" v-if="errorTip">
+                <i class="el-icon-warning"></i>
+                <div class="folt">
+                  <p>未能获取到单号信息</p>
+                  <p>请关闭本页</p>
+                  <p>再次扫描二维码</p>
+                </div>
+              </div>
+            </transition>
+            <transition name="wifi">
               <el-form
                 v-if="wifi"
                 key="main"
@@ -39,15 +49,15 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import { speckText, publicMethods } from 'Tools';
+  import {mapState} from 'vuex';
+  import {speckText, publicMethods} from 'Tools';
   import CONFIG from '~';
-  
+
   const {
     Validate,
     MutationsMethods,
   } = CONFIG('Login');
-  
+
   export default {
     name: 'login',
     beforeRouteUpdate (to, from, next) {
@@ -56,6 +66,7 @@
     data () {
       return {
         wifi: false,
+        errorTip: false,
         rule: Validate,
         loading: false,
         show: false,
@@ -105,21 +116,14 @@
         });
       },
       checkUser () {
-        if (this.$route.params.code !== 0) {
+        if (this.$route.params.code !== '0') {
           this.init();
         } else {
-          this.$message('正在尝试自动登录...');
-          this.p('/users/Login', this.$route.params, {
-            s: response => {
-              this.f(1, response.body.data);
-              this.$router.replace({path: '/wms'});
-            },
-            e: () => {
-              this.init();
-            },
-            show: true,
-            type: 'warning',
-          });
+          this.show = true;
+          setTimeout(() => {
+            this.errorTip = true;
+          }, 500);
+          speckText('未能获取到单号信息,请关闭本页，再次扫描二维码！');
         }
       },
       init () {
@@ -145,7 +149,7 @@
     padding: 0;
     font-weight: 300;
   }
-  
+
   body {
     font-family: 'Source Sans Pro', sans-serif;
     color: white;
@@ -177,19 +181,19 @@
       font-weight: 300;
     }
   }
-  
+
   .login {
     height: 100vh;
     background: #50a3a2;
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
   }
-  
+
   .login.form-success .container h1 {
     -webkit-transform: translateY(85px);
     -ms-transform: translateY(85px);
     transform: translateY(85px);
   }
-  
+
   .container {
     opacity: 0.8;
     position: absolute;
@@ -199,11 +203,11 @@
     margin-top: -200px;
     overflow: hidden;
     perspective: 2000px;
-    
+
     padding: 80px 0;
     height: 400px;
     text-align: center;
-    
+
     .inner {
       max-width: 600px;
       margin: 0 auto;
@@ -215,7 +219,7 @@
         transition-timing-function: ease-in-put;
         font-weight: 200;
       }
-      
+
       button {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -237,7 +241,7 @@
       }
     }
   }
-  
+
   .form {
     width: 360px;
     margin: 0 auto;
@@ -282,8 +286,20 @@
         background-color: rgba(238, 53, 42, 0.2);
       }
     }
+
+    .warning{
+      position: relative;
+      i{
+        left: calc(50% - 6rem);
+        top: 50%;
+        transform: translate(-50%,-50%);
+        position: absolute;
+        font-size: 1.5rem;
+        color: #27d347;
+      }
+    }
   }
-  
+
   .bg-bubbles {
     overflow: hidden;
     position: absolute;
@@ -292,9 +308,7 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-  }
-  
-  .bg-bubbles li {
+    li {
     /*border-radius: 50%;*/
     background-image: none;
     background-repeat: no-repeat;
@@ -311,7 +325,7 @@
     &:nth-child(2n) {
       bottom: -200px;
       animation: square 25s infinite;
-      
+
     }
     &:nth-child(2n+1) {
       top: -200px;
@@ -387,7 +401,8 @@
       animation-delay: 11s;
     }
   }
-  
+  }
+
   .login .loading li {
     left: 50%;
     top: 50%;
@@ -399,7 +414,7 @@
       /*background-image: url('../assets/logo.png');*/
     }
   }
-  
+
   @keyframes loading {
     0% {
       opacity: 0;
@@ -416,7 +431,7 @@
       transform: translate(-50%, -50%) scale(10);
     }
   }
-  
+
   @keyframes square2 {
     0% {
       -webkit-transform: translateY(0);
@@ -431,7 +446,7 @@
       transform: translateY(0);
     }
   }
-  
+
   @keyframes square {
     0% {
       -webkit-transform: translateY(0);
@@ -446,54 +461,54 @@
       transform: translateY(0);
     }
   }
-  
+
   .fade-enter-active {
     transition: opacity .5s
   }
-  
+
   .fade-enter /* .fade-leave-active in <2.1.8 */
   {
     opacity: 0
   }
-  
+
   .fade-enter-to /* .fade-leave-active in <2.1.8 */
   {
     opacity: 1
   }
-  
+
   .fade-leave-active {
     transition: 1s;
     transform-origin: bottom;
   }
-  
+
   .fade-leave-to {
     animation: fade-leave 1.5s forwards;
   }
-  
+
   .wifi-enter-active, .wifi-leave-active {
     position: absolute;
     width: 360px;
     transition: 2s;
   }
-  
+
   .wifi-enter-active {
     opacity: 0;
   }
-  
+
   .wifi-leave-active {
     opacity: 1;
   }
-  
+
   .wifi-enter-to, .wifi-leave-to {
     animation: wifi-enter 1.5s forwards;
     opacity: 1;
   }
-  
+
   .wifi-leave-to {
     animation: wifi-leave 1.5s forwards;
     opacity: 0;
   }
-  
+
   @keyframes wifi-enter {
     0% {
       transform: rotateY(-180deg);
@@ -514,7 +529,7 @@
       transform: rotateY(1080deg);
     }
   }
-  
+
   @keyframes wifi-leave {
     0% {
       transform: rotateY(0deg);
@@ -535,7 +550,7 @@
       transform: rotateY(1260deg);
     }
   }
-  
+
   @keyframes fade-leave {
     0% {
       transform: rotateX(0deg) translateY(0px);
@@ -547,7 +562,7 @@
       transform: rotateX(60deg) translateY(-600px);
     }
   }
-  
+
   .version {
     color: #e4e4e4;
     font-size: 1em;
