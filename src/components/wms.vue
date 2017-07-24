@@ -26,10 +26,12 @@
           row-key="hpbh"
           border>
           <el-table-column
-            label="商品编号"
-            min-width="100px"
-            align="center"
-            prop="hpbh">
+            label="范围"
+            min-width="160px"
+            align="center">
+            <template scope="s">
+              第{{s.row.fw1}}箱{{s.row.fw2 == s.row.fw1 ? '' : '-第' + s.row.fw2 + '箱'}}
+            </template>
           </el-table-column>
           <el-table-column
             label="商品名称"
@@ -44,12 +46,10 @@
             prop="sl">
           </el-table-column>
           <el-table-column
-            label="范围"
-            min-width="160px"
-            align="center">
-            <template scope="s">
-              第{{s.row.fw1}}箱{{s.row.fw2 == s.row.fw1 ? '' : '-第' + s.row.fw2 + '箱'}}
-            </template>
+            label="商品编号"
+            min-width="100px"
+            align="center"
+            prop="hpbh">
           </el-table-column>
         </el-table>
       </el-form-item>
@@ -95,6 +95,9 @@
       <el-form-item label="合计数量">
         <span>共 {{ data.sxs + data.zxs }} 箱</span>
       </el-form-item>
+      <el-form-item label="友情提示">
+        <span>请您仔细查看货物外包装是否完好，并核对实际件数及产品数量。</span>
+      </el-form-item>
       <el-form-item label="联系我们">
         <el-button type="text" @click="dialogVisible=true">对货品有疑问？</el-button>
       </el-form-item>
@@ -126,10 +129,29 @@
     </el-form>
     <el-dialog
       :modal="false"
-      title="提示"
+      title="我们的联系方式"
       size="large"
       :visible.sync="dialogVisible">
-      asjoidghasjdg
+      <el-form labelWidth="80px"
+               ref="form"
+               label-position="right">
+        <el-form-item label="客服电话1">
+          <a href="tel:024-25955420"> 024-25955420 </a>
+        </el-form-item>
+        <el-form-item label="客服电话2">
+          <a href="tel:024-25955423"> 024-25955423 </a>
+        </el-form-item>
+        <el-form-item label="客服电话3">
+          <a href="tel:024-25955310"> 024-25955310 </a>
+        </el-form-item>
+        <el-form-item label="客服电话4">
+          <a href="tel:024-25955312"> 024-25955312 </a>
+        </el-form-item>
+        <el-form-item label="配送微信">
+          <span>shsyrdc</span>
+          <img src="../assets/erweima.jpg" width="80%" alt="shsyrdc">
+        </el-form-item>
+      </el-form>
     </el-dialog>
   </div>
 </template>
