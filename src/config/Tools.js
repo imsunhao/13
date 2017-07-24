@@ -1,7 +1,7 @@
 import { statusConfig, validateRule } from './PublicMethods';
 import { state } from './VueX/public/http';
 
-const SPECK = false;
+const SPECK = true;
 
 function speckText (str) {
   if (!SPECK) return;
