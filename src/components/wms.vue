@@ -96,13 +96,7 @@
         <span>共 {{ data.sxs + data.zxs }} 箱</span>
       </el-form-item>
       <el-form-item label="联系我们">
-        <el-popover
-          ref="popover4"
-          placement="right"
-          trigger="click">
-          saghsd
-        </el-popover>
-        <el-button type="text" v-popover:popover4>对货品有疑问？</el-button>
+        <el-button type="text">对货品有疑问？</el-button>
       </el-form-item>
       <div class="wifi">
         <transition name="wifi" mode="out-in">
@@ -140,38 +134,20 @@
 
   import {
     Input,
-    InputNumber,
-    Radio,
-    RadioButton,
-    Switch,
-    Select,
-    Option,
     Button,
     Table,
     TableColumn,
-    Popover,
-    Tooltip,
     Tag,
     Icon,
-    Col,
     Rate,
   } from 'element-ui';
 
   Vue.use(Input);
-  Vue.use(InputNumber);
-  Vue.use(Radio);
-  Vue.use(RadioButton);
-  Vue.use(Switch);
-  Vue.use(Select);
-  Vue.use(Option);
   Vue.use(Button);
   Vue.use(Table);
   Vue.use(TableColumn);
-  Vue.use(Popover);
-  Vue.use(Tooltip);
   Vue.use(Tag);
   Vue.use(Icon);
-  Vue.use(Col);
   Vue.use(Rate);
 
   function check (step, item) {
