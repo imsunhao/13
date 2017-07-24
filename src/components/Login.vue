@@ -20,7 +20,7 @@
           <div class="form">
             <transition name="wifi">
               <div class="warning" v-if="errorTip">
-                <i class="el-icon-warning"></i>
+                <i class="el-icon-circle-cross"></i>
                 <div class="folt">
                   <p>未能获取到单号信息</p>
                   <p>请关闭本页</p>
@@ -295,7 +295,7 @@
         transform: translate(-50%,-50%);
         position: absolute;
         font-size: 1.5rem;
-        color: #27d347;
+        color: #d35e56;
       }
     }
   }

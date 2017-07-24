@@ -1,6 +1,6 @@
 <template>
   <div class="data">
-    <h2>天津尚赫保健品有限公司</h2>
+    <h2>尚赫保健品有限公司</h2>
     <el-form labelWidth="70px"
              ref="form"
              label-position="right"
@@ -45,10 +45,10 @@
           </el-table-column>
           <el-table-column
             label="范围"
-            min-width="80px"
+            min-width="160px"
             align="center">
             <template scope="s">
-              {{s.row.fw1}}-{{s.row.fw2}}
+              第{{s.row.fw1}}箱{{s.row.fw2==s.row.fw1?'':'-第'+s.row.fw2+'箱'}}
             </template>
           </el-table-column>
         </el-table>
@@ -59,10 +59,12 @@
           row-key="hpbh"
           border>
           <el-table-column
-            label="商品编号"
-            min-width="100px"
-            align="center"
-            prop="hpbh">
+            label="箱号"
+            min-width="80px"
+            align="center">
+            <template scope="s">
+              第{{s.row.fw1}}箱
+            </template>
           </el-table-column>
           <el-table-column
             label="商品名称"
@@ -77,12 +79,10 @@
             prop="sl">
           </el-table-column>
           <el-table-column
-            label="箱号"
-            min-width="80px"
-            align="center">
-            <template scope="s">
-              {{s.row.fw1}}
-            </template>
+            label="商品编号"
+            min-width="100px"
+            align="center"
+            prop="hpbh">
           </el-table-column>
         </el-table>
       </el-form-item>
@@ -96,7 +96,7 @@
         </el-rate>
       </el-form-item>
       <el-form-item label="联系我们">
-      
+
       </el-form-item>
     </el-form>
   </div>
@@ -104,8 +104,9 @@
 
 <script>
   import Vue from 'vue';
+  import App from '../main';
   import { mapState } from 'vuex';
-  
+
   import {
     Input,
     InputNumber,
@@ -124,7 +125,7 @@
     Col,
     Rate,
   } from 'element-ui';
-  
+
   Vue.use(Input);
   Vue.use(InputNumber);
   Vue.use(Radio);
@@ -141,7 +142,7 @@
   Vue.use(Icon);
   Vue.use(Col);
   Vue.use(Rate);
-  
+
   function check (step, item) {
     for (let i of step) {
       if (i.hpbh === item.hpbh) {
@@ -150,8 +151,14 @@
     }
     return false;
   }
-  
+
   export default {
+    beforeRouteEnter (to, from, next) {
+      console.log(App.data);
+      if (!App.data || App.data === null) {
+        next({path: '/login/0'});
+      } else next();
+    },
     name: 'wms',
     data () {
       return {
@@ -215,7 +222,7 @@
     h2 {
       text-align: center;
     }
-    
+
     .demo-table-expand {
       width: 90%;
       margin: 0 auto;
@@ -223,11 +230,11 @@
         margin-bottom: 5px;
       }
     }
-    
+
     .el-rate {
       margin-top: 8px;
     }
-    
+
   }
 
 </style>
