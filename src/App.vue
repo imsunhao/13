@@ -18,50 +18,51 @@
     width: 0.2rem;
     height: 0.2rem;
   }
-  
+
   ::-webkit-scrollbar-track {
-  
+
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 0.2rem;
     background: rgba(0, 0, 0, 0.2);
   }
-  
+
   ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.1);
   }
-  
+
   ::-webkit-scrollbar-thumb:vertical:hover {
     background-color: rgba(0, 0, 0, 0.3);
   }
-  
+
   ::-webkit-scrollbar-thumb:vertical:active {
     background-color: rgba(0, 0, 0, 0.7);
   }
-  
+
   html {
     overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: auto;
+    height: 100%;
   }
-  
+
   body {
+    height: 100%;
     margin: 0;
     padding: 0;
   }
-  
+
   @media screen and (max-width: 800px) {
-    
+
     .box-card {
       .el-card__body {
         padding: 0;
       }
     }
-    
+
   }
-  
+
   .login {
     .inner {
       .form {
@@ -81,7 +82,7 @@
       }
     }
   }
-  
+
   #app {
     position: relative;
     .appRouter {
@@ -92,27 +93,27 @@
       width: 100%;
     }
   }
-  
+
   .fadeApp-enter-active {
     opacity: 0;
     transition: 1s;
   }
-  
+
   .fadeApp-enter-to {
     opacity: 1;
     animation: fadeApp-enter 1s forwards;
   }
-  
+
   .fadeApp-leave-active {
     opacity: 1;
     transition: 1s;
   }
-  
+
   .fadeApp-leave-to {
     opacity: 0;
     animation: fadeApp-leave .7s forwards;
   }
-  
+
   @keyframes fadeApp-enter {
     0% {
       transform: scaleY(0) scaleX(0);
@@ -124,7 +125,7 @@
       transform: scaleY(1) scaleX(1);
     }
   }
-  
+
   @keyframes fadeApp-leave {
     0% {
       transform: scaleY(1) scaleX(1);
@@ -136,7 +137,7 @@
       transform: scaleY(0) scaleX(0);
     }
   }
-  
+
   .__table {
     position: relative;
     .el-form-item {
@@ -165,7 +166,7 @@
       outline: none;
     }
   }
-  
+
   .loginLoading {
     background: rgba(255, 255, 255, .5);
     .el-loading-spinner .path {
@@ -175,7 +176,7 @@
       color: #13ce66;
     }
   }
-  
+
   .table_form {
     .el-form-item__content {
       width: 100%;

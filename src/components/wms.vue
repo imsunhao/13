@@ -96,7 +96,7 @@
         <span>共 {{ data.sxs + data.zxs }} 箱</span>
       </el-form-item>
       <el-form-item label="联系我们">
-        <el-button type="text">对货品有疑问？</el-button>
+        <el-button type="text" @click="dialogVisible=true">对货品有疑问？</el-button>
       </el-form-item>
       <div class="wifi">
         <transition name="wifi" mode="out-in">
@@ -124,6 +124,13 @@
         </transition>
       </div>
     </el-form>
+    <el-dialog
+      :modal="false"
+      title="提示"
+      size="large"
+      :visible.sync="dialogVisible">
+      asjoidghasjdg
+    </el-dialog>
   </div>
 </template>
 
@@ -140,6 +147,7 @@
     Tag,
     Icon,
     Rate,
+    Dialog,
   } from 'element-ui';
 
   Vue.use(Input);
@@ -149,6 +157,7 @@
   Vue.use(Tag);
   Vue.use(Icon);
   Vue.use(Rate);
+  Vue.use(Dialog);
 
   function check (step, item) {
     for (let i of step) {
@@ -169,6 +178,7 @@
     data () {
       return {
         PJ: false,
+        dialogVisible: false,
         loading: false,
         'id': 1231,
         'pj': 3,
