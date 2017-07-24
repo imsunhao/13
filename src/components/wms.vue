@@ -96,31 +96,40 @@
         <span>共 {{ data.sxs + data.zxs }} 箱</span>
       </el-form-item>
       <el-form-item label="联系我们">
-        <el-button @click="PJ=!PJ" type="text">对货品有疑问？</el-button>
+        <el-popover
+          ref="popover4"
+          placement="right"
+          trigger="click">
+          saghsd
+        </el-popover>
+        <el-button type="text" v-popover:popover4>对货品有疑问？</el-button>
       </el-form-item>
-      <div v-if="!PJ" class="pingjia pingjia-ok">
-        <el-form-item label="评价我们">
-          <el-rate
-            v-model="pj"
-            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            show-text>
-          </el-rate>
-        </el-form-item>
-        <el-form-item label="留言我们">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 2, maxRows: 2}"
-            placeholder="请输入内容"
-            v-model="tqm">
-          </el-input>
-        </el-form-item>
-        <el-button class="submit" type="primary">提交</el-button>
-      </div>
-      <div v-if="PJ" class="pingjia pingjia-no">
-        <el-button class="submit" type="success">感谢您的评价！</el-button>
+      <div class="wifi">
+        <transition name="wifi" mode="out-in">
+          <div v-if="!PJ" :key="1" class="pingjia pingjia-ok">
+            <el-form-item label="评价我们">
+              <el-rate
+                v-model="pj"
+                :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+                show-text>
+              </el-rate>
+            </el-form-item>
+            <el-form-item label="留言我们">
+              <el-input
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 2}"
+                placeholder="请输入内容"
+                v-model="tqm">
+              </el-input>
+            </el-form-item>
+            <el-button class="submit" type="primary" @click="PJ=!PJ" :loading="loading">提交</el-button>
+          </div>
+          <div v-if="PJ" :key="2" class="pingjia pingjia-no">
+            <el-button class="submit" type="success" @click="PJ=!PJ">感谢您的评价！</el-button>
+          </div>
+        </transition>
       </div>
     </el-form>
-
   </div>
 </template>
 
@@ -176,7 +185,6 @@
 
   export default {
     beforeRouteEnter (to, from, next) {
-      console.log(App.data);
       if (!App.data || App.data === null) {
         next({path: '/login/0'});
       } else next();
@@ -185,6 +193,7 @@
     data () {
       return {
         PJ: false,
+        loading: false,
         'id': 1231,
         'pj': 3,
         'tqm': '',
@@ -222,7 +231,6 @@
       },
     },
     mounted () {
-      console.log(this.$refs.form.$el.querySelectorAll('.el-table'));
       this.PJ = this.data.pj;
       this.clickFun();
     },
@@ -258,25 +266,71 @@
     .el-rate {
       margin-top: 8px;
     }
+    .wifi {
+      height: 141px;
+      overflow: hidden;
 
-    .pingjia {
-      .submit {
-        margin-left: 20%;
-        width: 60%;
-        margin-bottom: 5px;
+      .pingjia {
+        .submit {
+          margin-left: 20%;
+          width: 60%;
+          margin-bottom: 5px;
+        }
+      }
+      .pingjia-ok {
+      }
+      .pingjia-no {
+        .submit {
+          margin-left: 20%;
+          width: 60%;
+          margin-bottom: 56px;
+          margin-top: 56px;
+        }
       }
     }
-    .pingjia-ok {
-    }
-    .pingjia-no {
-      .submit {
-        margin-left: 20%;
-        width: 60%;
-        margin-bottom: 56px;
-        margin-top: 56px;
-      }
-    }
-
   }
+
+  .wifi-enter-active, .wifi-leave-active {
+    transition: .5s;
+  }
+
+  .wifi-enter-active {
+    opacity: 0;
+  }
+
+  .wifi-leave-active {
+    opacity: 1;
+  }
+
+  .wifi-enter-to, .wifi-leave-to {
+    animation: wifi-enter .5s forwards;
+    transform-origin:100%;
+    opacity: 1;
+  }
+
+  .wifi-leave-to {
+    animation: wifi-leave .5s forwards;
+    transform-origin:100% 100%;
+    opacity: 0;
+  }
+
+  @keyframes wifi-enter {
+    0% {
+      transform: rotate(-90deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  @keyframes wifi-leave {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(90deg);
+    }
+  }
+
 
 </style>
