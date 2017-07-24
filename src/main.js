@@ -42,7 +42,7 @@ export default new Vue({
   template: '<App/>',
   components: {App},
   computed: {
-    ...VueX.mapState(['http', 'user']),
+    ...VueX.mapState(['http', 'user', 'data']),
   },
   methods: {
     ...MutationsMethods(Mutations),
