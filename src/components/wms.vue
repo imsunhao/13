@@ -6,7 +6,7 @@
              label-position="right"
              class="demo-table-expand">
       <el-form-item label="订单号">
-        <span>{{ data.bh }}</span>
+        <el-tag type="success">{{ data.bh }}</el-tag>
       </el-form-item>
       <el-form-item label="发货方式">
         <span> 佳怡尚赫沈阳仓 </span>
@@ -20,7 +20,7 @@
       <el-form-item label="联系电话">
         <span>{{ data.tel == null ? '暂无' : data.tel }}</span>
       </el-form-item>
-      <el-form-item label="整箱">
+      <el-form-item label="整箱详情">
         <el-table
           :data="table1"
           row-key="hpbh"
@@ -48,12 +48,15 @@
             min-width="160px"
             align="center">
             <template scope="s">
-              第{{s.row.fw1}}箱{{s.row.fw2==s.row.fw1?'':'-第'+s.row.fw2+'箱'}}
+              第{{s.row.fw1}}箱{{s.row.fw2 == s.row.fw1 ? '' : '-第' + s.row.fw2 + '箱'}}
             </template>
           </el-table-column>
         </el-table>
       </el-form-item>
-      <el-form-item label="散箱">
+      <el-form-item label="整箱数量">
+        <span>共 {{data.zxs}} 箱</span>
+      </el-form-item>
+      <el-form-item label="散箱详情">
         <el-table
           :data="table2"
           row-key="hpbh"
@@ -86,26 +89,45 @@
           </el-table-column>
         </el-table>
       </el-form-item>
-      <el-form-item label="合计">
-        <span>共{{ data.sxs + data.zxs }}箱，其中整箱（共{{data.zxs}}箱）散箱（共{{data.sxs}}箱）</span>
+      <el-form-item label="散箱数量">
+        <span>共 {{data.sxs}} 箱</span>
       </el-form-item>
-      <el-form-item label="评价我们">
-        <el-rate
-          v-model="pj"
-          show-text>
-        </el-rate>
+      <el-form-item label="合计数量">
+        <span>共 {{ data.sxs + data.zxs }} 箱</span>
       </el-form-item>
       <el-form-item label="联系我们">
-
+        <el-button @click="PJ=!PJ" type="text">对货品有疑问？</el-button>
       </el-form-item>
+      <div v-if="!PJ" class="pingjia pingjia-ok">
+        <el-form-item label="评价我们">
+          <el-rate
+            v-model="pj"
+            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+            show-text>
+          </el-rate>
+        </el-form-item>
+        <el-form-item label="留言我们">
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 2}"
+            placeholder="请输入内容"
+            v-model="tqm">
+          </el-input>
+        </el-form-item>
+        <el-button class="submit" type="primary">提交</el-button>
+      </div>
+      <div v-if="PJ" class="pingjia pingjia-no">
+        <el-button class="submit" type="success">感谢您的评价！</el-button>
+      </div>
     </el-form>
+
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import App from '../main';
-  import { mapState } from 'vuex';
+  import {mapState} from 'vuex';
 
   import {
     Input,
@@ -162,9 +184,10 @@
     name: 'wms',
     data () {
       return {
+        PJ: false,
         'id': 1231,
         'pj': 3,
-        'tqm': 3321,
+        'tqm': '',
       };
     },
     computed: {
@@ -200,6 +223,7 @@
     },
     mounted () {
       console.log(this.$refs.form.$el.querySelectorAll('.el-table'));
+      this.PJ = this.data.pj;
       this.clickFun();
     },
     methods: {
@@ -233,6 +257,24 @@
 
     .el-rate {
       margin-top: 8px;
+    }
+
+    .pingjia {
+      .submit {
+        margin-left: 20%;
+        width: 60%;
+        margin-bottom: 5px;
+      }
+    }
+    .pingjia-ok {
+    }
+    .pingjia-no {
+      .submit {
+        margin-left: 20%;
+        width: 60%;
+        margin-bottom: 56px;
+        margin-top: 56px;
+      }
     }
 
   }
