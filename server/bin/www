@@ -21,21 +21,6 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-
-
-/*****************************************************************************/
-/*
- /* 启用webSocket通讯协议
- /*     功能            长连接-通讯   核心
- /*     网址：  https://github.com/sitegui/nodejs-websocket
- */
-// const socketIO = require('socket.io')(server);
-// require('../routes/socket')(socketIO);
-
-/*
- /*****************************************************************************/
-
-
 /**
  * Listen on provided port, on all network interfaces.
  */

@@ -31,7 +31,7 @@ module.exports = {
         target: 'http://221.214.90.154:5306/',
         // pathRewrite: {'^/api' : '/wms4'},
         secure: false,
-        changeOrigin: true
+        changeOrigin: false
       },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
