@@ -100,6 +100,7 @@
             }, {
               s: response => {
                 this.f(1, response.data);
+                this.f(2, this.form);
                 this.$router.push({path: '/wms'});
                 this.loading = true;
                 this.show = false;

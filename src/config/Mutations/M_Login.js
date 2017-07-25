@@ -17,5 +17,14 @@ export default [
       };
     },
   },
+  {
+    commit: 'updateUser_2',
+    payload: (obj, data) => {
+      return {
+        event: '更新 user',
+        amount: data,
+      };
+    },
+  },
 ];
 

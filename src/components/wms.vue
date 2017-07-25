@@ -103,7 +103,7 @@
       </el-form-item>
       <div class="wifi">
         <transition name="wifi" mode="out-in">
-          <div v-if="!PJ" :key="1" class="pingjia pingjia-ok">
+          <div v-if="PJ" :key="1" class="pingjia pingjia-ok">
             <el-form-item label="评价我们">
               <el-rate
                 v-model="pj"
@@ -119,10 +119,10 @@
                 v-model="tqm">
               </el-input>
             </el-form-item>
-            <el-button class="submit" type="primary" @click="PJ=!PJ" :loading="loading">提交</el-button>
+            <el-button class="submit" type="primary" @click="submit" :loading="loading">提交</el-button>
           </div>
-          <div v-if="PJ" :key="2" class="pingjia pingjia-no">
-            <el-button class="submit" type="success" @click="PJ=!PJ">感谢您的评价！</el-button>
+          <div v-if="!PJ" :key="2" class="pingjia pingjia-no">
+            <el-button class="submit" type="success">感谢您的评价！</el-button>
           </div>
         </transition>
       </div>
@@ -159,6 +159,7 @@
 <script>
   import Vue from 'vue';
   import App from '../main';
+  import {publicMethods} from 'Tools';
   import {mapState} from 'vuex';
 
   import {
@@ -199,12 +200,11 @@
     name: 'wms',
     data () {
       return {
-        PJ: false,
         dialogVisible: false,
         loading: false,
-        'id': 1231,
-        'pj': 3,
-        'tqm': '',
+        PJ: 0,
+        pj: 3,
+        tqm: '',
       };
     },
     computed: {
@@ -239,10 +239,19 @@
       },
     },
     mounted () {
-      this.PJ = this.data.pj;
+      this.PJ = parseInt(this.data.pj) === 0;
       this.clickFun();
     },
     methods: {
+      submit () {
+        this.loading = true;
+        this.p('/GetCkpj', {'id': this.user.id, 'pf': this.pj, 'pj': this.tqm}, {
+          s: response => {
+            this.loading = false;
+            this.PJ = false;
+          },
+        });
+      },
       clickFun () {
         this.getDom().forEach(div => {
           div.parentElement.parentElement.classList['add']('table_form');
@@ -251,6 +260,7 @@
       getDom () {
         return Array.from(this.$refs.form.$el.querySelectorAll('.el-table'));
       },
+      ...publicMethods(),
     },
   };
 </script>
@@ -312,13 +322,13 @@
 
   .wifi-enter-to, .wifi-leave-to {
     animation: wifi-enter .5s forwards;
-    transform-origin:100%;
+    transform-origin: 100%;
     opacity: 1;
   }
 
   .wifi-leave-to {
     animation: wifi-leave .5s forwards;
-    transform-origin:100% 100%;
+    transform-origin: 100% 100%;
     opacity: 0;
   }
 
@@ -339,6 +349,5 @@
       transform: rotate(90deg);
     }
   }
-
 
 </style>
