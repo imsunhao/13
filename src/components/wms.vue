@@ -63,7 +63,7 @@
           border>
           <el-table-column
             label="箱号"
-            min-width="80px"
+            min-width="100px"
             align="center">
             <template scope="s">
               第{{s.row.fw1}}箱
