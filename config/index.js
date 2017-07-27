@@ -28,8 +28,12 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/WebServices/Wbs.asmx': {
-        target: 'http://221.214.90.154:5306/',
-        // pathRewrite: {'^/api' : '/wms4'},
+        target: 'http://127.0.0.1:5306/',
+        secure: false,
+        changeOrigin: false
+      },
+      '/WebServices/WbsJiNan.asmx': {
+        target: 'http://127.0.0.1:5555/',
         secure: false,
         changeOrigin: false
       },

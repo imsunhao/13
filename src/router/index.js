@@ -40,7 +40,7 @@ export default new Router({
       component: Route,
     },
     {
-      path: '/login/:code',
+      path: '/login/:code/:place',
       component: Login,
     },
     {

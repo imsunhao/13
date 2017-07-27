@@ -2,7 +2,10 @@ const state = {
   http: {
     ip: '192.168.191.1',
     port: 18080,
-    projectName: '/WebServices/Wbs.asmx',
+    projectName: {
+      ShenYang: '/WebServices/WbsShenYang.asmx',
+      JiNan: '/WebServices/WbsJiNan.asmx',
+    },
   },
 };
 

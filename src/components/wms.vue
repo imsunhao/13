@@ -194,7 +194,7 @@
   export default {
     beforeRouteEnter (to, from, next) {
       if (!App.data || App.data === null) {
-        next({path: '/login/0'});
+        next({path: '/login/0/ShenYang'});
       } else next();
     },
     name: 'wms',
