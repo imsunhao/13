@@ -9,7 +9,7 @@
         <el-tag type="success">{{ data.bh }}</el-tag>
       </el-form-item>
       <el-form-item label="发货方式">
-        <span> 佳怡尚赫沈阳仓 </span>
+        <span>{{'佳怡尚赫'+findCK (http.url)+'仓'||'数据异常'}}</span>
       </el-form-item>
       <el-form-item label="收货地址">
         <span>{{ data.dz }}</span>
@@ -208,7 +208,7 @@
       };
     },
     computed: {
-      ...mapState(['data', 'user']),
+      ...mapState(['data', 'user', 'http']),
       table1 () {
         let step = [];
         for (let item of this.data.zxData) {
@@ -259,6 +259,13 @@
       },
       getDom () {
         return Array.from(this.$refs.form.$el.querySelectorAll('.el-table'));
+      },
+      findCK (CKUrl) {
+        for (let item in this.http.projectName) {
+          if (this.http.projectName.hasOwnProperty(item) && this.http.projectName[item] === CKUrl) {
+            return this.http.CK[item];
+          }
+        }
       },
       ...publicMethods(),
     },

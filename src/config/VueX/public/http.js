@@ -6,6 +6,10 @@ const state = {
       ShenYang: '/WebServices/WbsShenYang.asmx',
       JiNan: '/WebServices/WbsJiNan.asmx',
     },
+    CK: {
+      ShenYang: '沈阳',
+      JiNan: '济南',
+    },
   },
 };
 

@@ -27,13 +27,13 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/WebServices/Wbs.asmx': {
-        target: 'http://127.0.0.1:5306/',
+      '/WebServices/WbsShenYang.asmx': {
+        target: 'http://221.214.90.154:5306/',
         secure: false,
         changeOrigin: false
       },
       '/WebServices/WbsJiNan.asmx': {
-        target: 'http://127.0.0.1:5555/',
+        target: 'http://221.214.90.154:5555/',
         secure: false,
         changeOrigin: false
       },

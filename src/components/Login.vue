@@ -134,6 +134,10 @@
         }, 500);
         this.form.id = this.$route.params.code;
         speckText('欢迎使用乐速科技WMS 4.0');
+        this.f(0, {
+          ...this.http,
+          url: this.http.projectName[this.$route.params.place],
+        });
         this.f(1, {});
       },
       ...MutationsMethods,
