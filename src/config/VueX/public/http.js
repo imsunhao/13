@@ -3,11 +3,11 @@ const state = {
     ip: '192.168.191.1',
     port: 18080,
     projectName: {
-      ShenYang: '/WebServices/WbsShenYang.asmx',
+      ShenYan: '/WebServices/WbsShenYang.asmx',
       JiNan: '/WebServices/WbsJiNan.asmx',
     },
     CK: {
-      ShenYang: '沈阳',
+      ShenYan: '沈阳',
       JiNan: '济南',
     },
   },
